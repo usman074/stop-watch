@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stopwatch</title>
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+    <main>
+        <section>
+            <div class="container">
+                <h1 id="timer">00 : 00 : 00.000</h1>
+                <p id="timeSplit">Split Time</p>
+                <div class="btn">
+                    <button id="toggleBtn" class="btnStyle">Start</button>
+                    <button id="splitBtn" onclick="splitTime()">Split</button>
+                    <button id="resetBtn" onclick="resetStopWatch()">Reset</button>
+                    <hr>
+                </div>
+            </div>
+        </section>
+        <section id="logContainer">
+
+        </section>
+    </main>
+</body>
+
+<script src="js/stopWatch.js"></script>
+<script src="js/main.js"></script>
+
+</html>
