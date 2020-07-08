@@ -1,10 +1,14 @@
-var isStart = false;
-var toggleBtn = document.getElementById('toggleBtn');
-var splitBtn = document.getElementById('splitBtn');
-var resetBtn = document.getElementById('resetBtn');
-var timer = document.getElementById('timer');
-var timeSplit = document.getElementById('timeSplit');
-var watch = new Stopwatch(timer, timeSplit);
+import { Watch } from './stopWatch2.js';
+// import * as watch from './temp.js';
+let isStart = false;
+const toggleBtn = document.getElementById('toggleBtn');
+const splitBtn = document.getElementById('splitBtn');
+const resetBtn = document.getElementById('resetBtn');
+const timer = document.getElementById('timer');
+const timeSplit = document.getElementById('timeSplit');
+// var watch = new Stopwatch(timer, timeSplit);
+const watch = new Watch(timer, timeSplit);
+// watch.setDefaultValues(timer, timeSplit)
 disableButton()
 function disableButton() {
     if (!isStart) {
@@ -24,9 +28,6 @@ function start() {
     toggleBtn.textContent = 'Pause';
     resetBtn.disabled = true;
     watch.start();
-
-
-
 }
 
 function pause() {
@@ -53,4 +54,9 @@ toggleBtn.addEventListener('click', function () {
     isStart ? pause() : start();
 });
 
-
+splitBtn.addEventListener('click', function () {
+    splitTime();
+});
+resetBtn.addEventListener('click', function () {
+    resetStopWatch();
+});

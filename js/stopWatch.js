@@ -1,11 +1,11 @@
 function Stopwatch(timerElem, timeSplitElem) {
-    var offset = 0;
-    var interval;
-    var time = 0;
-    var logs = [];
+    let offset = 0;
+    let interval;
+    let time = 0;
+    let logs = [];
     function timeDiff() {
-        var now = Date.now();
-        var timePassed = now - offset;
+        let now = Date.now();
+        let timePassed = now - offset;
         offset = now;
         return timePassed;
     }
@@ -13,10 +13,10 @@ function Stopwatch(timerElem, timeSplitElem) {
     function timeFormatter(time) {
         time = new Date(time);
 
-        var hours = time.getHours().toString()
-        var minutes = time.getMinutes().toString();
-        var seconds = time.getSeconds().toString();
-        var milliseconds = time.getMilliseconds().toString();
+        let hours = time.getHours().toString()
+        let minutes = time.getMinutes().toString();
+        let seconds = time.getSeconds().toString();
+        let milliseconds = time.getMilliseconds().toString();
 
         if (hours.length < 2) {
             hours = '0' + minutes;
@@ -32,17 +32,14 @@ function Stopwatch(timerElem, timeSplitElem) {
         while (milliseconds.length < 3) {
             milliseconds = '0' + milliseconds;
         }
-        console.log(minutes)
-        console.log(seconds)
-        console.log(milliseconds)
+
         return hours + ' : ' + minutes + ' : ' + seconds + ' . ' + milliseconds;
     }
 
     function update() {
-
         console.log(offset)
         time += timeDiff();
-        timerElem.textContent = timeFormatter(time)
+        timerElem['textContent'] = timeFormatter(time)
     }
 
     this.start = () => {
@@ -65,37 +62,38 @@ function Stopwatch(timerElem, timeSplitElem) {
             type: 'Split',
             time: timerElem.textContent
         });
-        timeSplitElem.textContent = timerElem.textContent;
+        timeSplitElem['textContent'] = timerElem['textContent'];
+        generateLogs();
     }
 
     this.reset = () => {
         time = 0;
-        timerElem.textContent = timeFormatter(time)
+        timerElem['textContent'] = timeFormatter(time)
     };
 
     function generateLogs() {
         let element = document.getElementById("logContainer");
         element.innerHTML = null;
-        element.style.gridTemplateRows = `repeat(${logs.length}, auto)`;
-        logs.forEach((obj, ind) => {
+        element['style']['gridTemplateRows'] = `repeat(${logs.length}, auto)`;
+        for (const [ind, obj] of logs.entries()) {
             console.log(obj)
             console.log(ind)
-            var div = document.createElement("div");
-            var id = document.createElement("p");
-            var logTime = document.createElement("p");
-            obj.type === 'Split'? logTime.classList.add('orange-txt'): logTime.classList.add('pink-txt');
-            var logType = document.createElement("p");
-            var idText = document.createTextNode("#" +(ind+1));
-            var logTimeText = document.createTextNode(obj.time);
-            var logTypeText = document.createTextNode(obj.type);
+            let div = document.createElement("div");
+            let id = document.createElement("p");
+            let logTime = document.createElement("p");
+            obj.type === 'Split' ? logTime['classList'].add('orange-txt') : logTime['classList'].add('pink-txt');
+            let logType = document.createElement("p");
+            let idText = document.createTextNode("#" + (ind + 1));
+            let logTimeText = document.createTextNode(obj['time']);
+            let logTypeText = document.createTextNode(obj['type']);
             id.appendChild(idText)
             logTime.appendChild(logTimeText)
             logType.appendChild(logTypeText)
             div.appendChild(id)
             div.appendChild(logTime)
             div.appendChild(logType)
-            div.classList.add('log-position');
+            div['classList'].add('log-position');
             element.appendChild(div)
-        })
+        }
     }
 }
