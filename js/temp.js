@@ -1,56 +1,48 @@
-let offset = 0;
-let interval;
-let time = 0;
-let logs = [];
-let timerElem;
-let timeSplitElem;
-export function setDefaultValues(timerElem, timeSplitElem) {
-    timeSplitElem = timeSplitElem;
-    timerElem = timerElem;
-    console.log(timerElem)
+let _time = 0;
+const intervalTime = 10;
+
+export function start(timer) {
+    
+     return setInterval(update, intervalTime, timer)
+    //  console.log(interval)
+
 }
 
-export function start() {
-    interval = setInterval(update.bind(this), 10);
-    offset = Date.now();
-}
-
-export function pause () {
-    logs.push({
-        type: 'Pause',
-        time: timerElem.textContent
-    });
+export function pause (interval, timer) {
+    // logs.push({
+    //     type: 'Pause',
+    //     time: timerElem.textContent
+    // });
     clearInterval(interval);
-    interval = null;
-    generateLogs();
+    // interval = null;
+    // generateLogs();
+    return {type: 'Pause', time: timer.textContent};
+    // console.log(a)
+    // return a;
 }
 
-export function splitTime () {
-    logs.push({
-        type: 'Split',
-        time: timerElem.textContent
-    });
-    timeSplitElem.textContent = timerElem.textContent;
+export function splitTime (timeSplit, timer) {
+    timeSplit.textContent = timer.textContent;
+    return {type: 'Split', time: timer.textContent};
 }
 
-export function reset () {
-    time = 0;
-    timerElem.textContent = timeFormatter(time)
+export function reset (timerElem) {
+    _time = 0;
+    timerElem.textContent = timeFormatter(_time)
 };
 
-function update() {
-    console.log(offset)
-    time += timeDiff();
-    timerElem.textContent = timeFormatter(time)
+function update(timer) {
+    _time += intervalTime;
+    timer.textContent = timeFormatter(_time)
 }
 
 function timeFormatter(time) {
-    time = new Date(time);
+    const _time = new Date(time);
 
-    let hours = time.getHours().toString()
-    let minutes = time.getMinutes().toString();
-    let seconds = time.getSeconds().toString();
-    let milliseconds = time.getMilliseconds().toString();
+    let hours = _time.getHours().toString()
+    let minutes = _time.getMinutes().toString();
+    let seconds = _time.getSeconds().toString();
+    let milliseconds = _time.getMilliseconds().toString();
 
     if (hours.length < 2) {
         hours = '0' + minutes;
@@ -70,20 +62,11 @@ function timeFormatter(time) {
     return hours + ' : ' + minutes + ' : ' + seconds + ' . ' + milliseconds;
 }
 
-function timeDiff() {
-    let now = Date.now();
-    let timePassed = now - offset;
-    offset = now;
-    return timePassed;
-}
-
-function generateLogs() {
+export function generateLogs(logs) {
     let element = document.getElementById("logContainer");
     element.innerHTML = null;
     element.style.gridTemplateRows = `repeat(${logs.length}, auto)`;
     for (const [ind, obj] of logs.entries()) {
-        console.log(obj)
-        console.log(ind)
         let div = document.createElement("div");
         let id = document.createElement("p");
         let logTime = document.createElement("p");
